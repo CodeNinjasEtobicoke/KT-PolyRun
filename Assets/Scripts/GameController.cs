@@ -21,5 +21,11 @@ public class GameController : MonoBehaviour
     {
         score++;
         scoreText.text = score.ToString();
+        Debug.Log(scoreText);
+    }
+
+    private void Start()
+    {
+        gameOverPanel.SetActive(false);
     }
 }

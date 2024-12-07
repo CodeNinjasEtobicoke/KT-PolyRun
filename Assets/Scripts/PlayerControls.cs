@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PlayerControls : MonoBehaviour
     public bool isGrounded = false;
     float posX = 0.0f;
     Rigidbody2D rb;
+    public Text scoreText;
+    int score;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,18 +34,20 @@ public class PlayerControls : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       if(collision.collider.tag == "Ground")
+       if (collision.collider.tag == "Ground")
         {
             isGrounded = true;
         }
-        if(collision.collider.tag == "Enemy")
+        if (collision.collider.tag == "Enemy")
         {
             GameOver();
         }
-        if(collision.tag == "Coin")
+        if (collision.collider.tag == "Coin")
         {
-            GameObject.Find("GameController").GetComponent<GameController>().IncrementScore();
-            Destroy(collison.gameObject);
+            FindObjectOfType<GameController>().IncrementScore();
+            Destroy(collision.gameObject);
+            //score++;
+            //scoreText.text = score.ToString();
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
@@ -62,15 +67,9 @@ public class PlayerControls : MonoBehaviour
 
     void GameOver()
     {
-        GameObject.Find("GameController").GetComponent<GameConroller>().GameOver();
+        GameObject.Find("GameController").GetComponent<GameController>().GameOver();
     }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Coin")
-        {
-            Destroy(collision.gameObject);
-        }
-    }
+
 
 }
 
